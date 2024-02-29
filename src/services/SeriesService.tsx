@@ -2,13 +2,13 @@ import { ServiceHelper } from '../helpers/ServiceHelper'
 import { TitlesResponse, SearchTitlesParams } from '../types/ApiTypes'
 import { AppType, apiGet } from './BaseService'
 
-export const getMovies = async (
+export const getSeries = async (
   params?: SearchTitlesParams
 ): Promise<TitlesResponse> => {
   try {
-    const url = `/discover/movie?`
+    const url = `/discover/tv?`
     const response = await apiGet<any>(url, AppType.Tmdb, params)
-    const movies = ServiceHelper.getMoviesList(response.results)
+    const movies = ServiceHelper.getSeriesList(response.results)
     return {
       data: movies,
       totalPages: response.total_pages
@@ -19,13 +19,13 @@ export const getMovies = async (
   }
 }
 
-export const getMoviesByName = async (
+export const getSeriesByName = async (
   params?: SearchTitlesParams
 ): Promise<TitlesResponse> => {
   try {
-    const url = `/search/movie?`
+    const url = `/search/tv?`
     const response = await apiGet<any>(url, AppType.Tmdb, params)
-    const movies = ServiceHelper.getMoviesList(response.results)
+    const movies = ServiceHelper.getSeriesList(response.results)
     return {
       data: movies,
       totalPages: response.total_pages

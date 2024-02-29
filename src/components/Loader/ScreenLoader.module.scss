@@ -1,0 +1,278 @@
+/* TODO: Improve this code in order to do it responsive */
+
+@mixin corn{
+    z-index: 9998;
+    position: absolute;
+    opacity: 1;
+}
+
+.loaderContainer {
+    min-width: 100vw;
+    min-height: 100vh;
+    position: sticky;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 999;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+}
+
+.popCorn{
+    animation: popcornExpodes 2.5s infinite  ease-in-out;
+    position: absolute;
+    z-index: 9999;
+}
+
+.loaderShadow{
+    min-width: 100vw;
+    min-height: 100vh;
+    position: sticky;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 980;
+    opacity: 0.75;
+    background-color: black
+}
+
+.loaderBackground{
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    position: absolute;
+    align-self: center;
+    z-index: 981;
+    background-color: black
+}
+.labelContainer{
+    position: absolute;
+    z-index: 9999;
+    margin-top: 270px;
+}
+.loadingLabel{
+    color: #ffffff
+}
+@for $i from 1 to 8 {
+    .corn#{$i} {
+      @include corn;
+      animation: cornAnimation#{$i} 2.5s infinite;
+      animation-direction: normal;
+    }
+  }
+
+@for $i from 1 to 4 {
+    .dot#{$i} {
+      animation: dotAnimation 1s infinite;
+      animation-direction: normal;
+      animation-delay: calc(0.3s * #{$i});
+    }
+  }
+
+@keyframes dotAnimation {
+    0%{
+        opacity: 1;
+    }
+    50%{
+        opacity: 0;
+    }
+}
+@keyframes popcornExpodes {
+    0%{
+        height: 13rem;
+    }
+    5%{
+        transform: rotate(1deg);
+    }
+    8%{
+        transform: rotate(-1deg);
+    }
+    11%{
+        transform: rotate(1deg);
+    }
+    14%{
+        transform: rotate(-1deg);
+    }
+    17%{
+        transform: rotate(0deg);
+    }
+    20%{
+        height: 10rem;
+    }
+
+    25%{
+        height: 12rem;
+    }
+    28%{
+        transform: translate3d(0,-15px,0);
+    }
+    35%{
+        transform: translate3d(0,0,0);
+        height: 13rem;
+    }
+    100%{
+        height: 13rem;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes cornAnimation1 {
+    20%{
+        opacity: 1;
+        transform: translate3d(0, 0, 0)
+
+    }
+    38%{
+        transform: translate3d(0, -180px, 0) translateX(-180px)
+
+    }
+    70%{
+        transform: translate3d(0, -180px, 0) translateX(-180px)
+
+    }
+    70%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 0;
+    }
+
+}
+
+@keyframes cornAnimation2 {
+    20%{
+        opacity: 1;
+        transform: translate3d(0, 0, 0)
+
+    }
+    38%{
+        transform: translate3d(0, -220px, 0) translateX(-120px)
+
+    }
+    70%{
+        transform: translate3d(0, -220px, 0) translateX(-120px)
+
+    }
+    70%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 0;
+    }
+
+}
+
+@keyframes cornAnimation3 {
+    20%{
+        opacity: 1;
+        transform: translate3d(0, 0, 0)
+
+    }
+    38%{
+        transform: translate3d(0, -245px, 0) translateX(-65px)
+
+    }
+    70%{
+        transform: translate3d(0, -245px, 0) translateX(-65px)
+
+    }
+    70%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 0;
+    }
+
+}
+
+@keyframes cornAnimation4 {
+    20%{
+        opacity: 1;
+        transform: translate3d(0, 0, 0)
+
+    }
+    38%{
+        transform: translate3d(0, -260px, 0) translateX(0px)
+
+    }
+    70%{
+        transform: translate3d(0, -260px, 0) translateX(0px)
+
+    }
+    70%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 0;
+    }
+
+}
+
+@keyframes cornAnimation5 {
+    20%{
+        opacity: 1;
+        transform: translate3d(0, 0, 0)
+
+    }
+    38%{
+        transform: translate3d(0, -245px, 0) translateX(65px)
+
+    }
+    70%{
+        transform: translate3d(0, -245px, 0) translateX(65px)
+
+    }
+    70%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 0;
+    }
+
+}
+
+@keyframes cornAnimation6 {
+    20%{
+        opacity: 1;
+        transform: translate3d(0, 0, 0)
+
+    }
+    38%{
+        transform: translate3d(0, -220px, 0) translateX(120px)
+
+    }
+    70%{
+        transform: translate3d(0, -220px, 0) translateX(120px)
+
+    }
+    70%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 0;
+    }
+
+}
+
+@keyframes cornAnimation7 {
+    20%{
+        opacity: 1;
+        transform: translate3d(0, 0, 0)
+
+    }
+    38%{
+        transform: translate3d(0, -180px, 0) translateX(180px)
+
+    }
+    70%{
+        transform: translate3d(0, -180px, 0) translateX(180px)
+
+    }
+    70%{
+        opacity: 0;
+    }
+    100%{
+        opacity: 0;
+    }
+
+}

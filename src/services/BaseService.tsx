@@ -7,6 +7,7 @@ import type {
   ApiErrorResponse,
   ApiResponse
 } from '../core/ApiResponses'
+import { SearchTitlesParams } from '../types/ApiTypes'
 
 export enum ApplicationId {
   Tmdb = 'Tmdb'
@@ -53,24 +54,49 @@ export type ResponseType =
   | 'text'
   | 'stream'
 
+const getParams = (params: SearchTitlesParams | undefined): string => {
+  if (!params) return ''
+  let paramsString = '&'
+  const keys = Object.keys(params)
+  const values = Object.values(params)
+
+  keys.forEach(
+    (key, i) =>
+      (paramsString =
+        paramsString +
+        `${key}=${
+          typeof values[i] === 'string'
+            ? values[i].split(' ').join('%20')
+            : values[i]
+        }&`)
+  )
+  return paramsString.slice(0, -1)
+}
+
 const getResponse = async <ResT, ReqT>(
   httpMethod: HttpMethod,
   relativeUrl: string,
   data?: ReqT,
   appType?: AppType,
   config: RequestConfig = {},
-  paginated?: boolean
+  paginated?: boolean,
+  params?: SearchTitlesParams
 ): Promise<ResT> => {
   let fullUrl: string
   const axiosRequestConfig: AxiosRequestConfig | undefined = config
   switch (appType) {
     case AppType.Tmdb:
-      fullUrl = `${ConfigurationService.AppSettings.BaseUrlTmdb}${relativeUrl}`
+      fullUrl = `${
+        ConfigurationService.AppSettings.BaseUrlTmdb
+      }${relativeUrl}api_key=${import.meta.env.TMDB_API_KEY}${getParams(
+        params
+      )}`
       if (!axiosRequestConfig.headers) {
         axiosRequestConfig.headers = {}
       }
-      axiosRequestConfig.headers['X-API-Key'] =
-        ConfigurationService.AppSettings.TmdbKeyId
+      /* axiosRequestConfig.headers['Access-Control-Allow-Credentials'] = true */
+      /* axiosRequestConfig.headers['X-API-Key'] =
+        ConfigurationService.AppSettings.TmdbKeyId */
       break
     default:
       fullUrl = `${ConfigurationService.AppSettings.BaseUrlTmdb}${relativeUrl}`
@@ -84,10 +110,7 @@ const getResponse = async <ResT, ReqT>(
           fullUrl,
           axiosRequestConfig
         )
-        return (
-          (paginated ? response?.data : response?.data?.data) ||
-          response?.data?.message
-        )
+        return response?.data ?? []
       } catch (error: any) {
         handleError(error as AxiosError<ApiErrorResponse>, 'GET')
       }
@@ -103,7 +126,7 @@ const getResponse = async <ResT, ReqT>(
           ReqT,
           AxiosResponse<DataResponse>
         >(fullUrl, data, axiosRequestConfig)
-        return paginated ? response?.data : response?.data?.data
+        return response?.data?.results ?? []
       } catch (error: any) {
         handleError(
           error as AxiosError<ApiErrorResponse>,
@@ -231,6 +254,7 @@ export const apiPatch = async <ReqT, ResT>(
 export const apiGet = async <ResT,>(
   url: string,
   appType: AppType = AppType.Tmdb,
+  params?: SearchTitlesParams,
   requestConfig?: RequestConfig,
   paginated?: boolean
 ): Promise<ResT> =>
@@ -240,7 +264,8 @@ export const apiGet = async <ResT,>(
     undefined,
     appType,
     requestConfig,
-    paginated
+    paginated,
+    params
   )
 export const apiDelete = async <ResT,>(
   url: string,

@@ -1,14 +1,11 @@
-import { useState } from 'react'
-import { SearchMovie } from './components/SearchMovies/SearchMovie'
+import { SearchScreen } from './components/SearchTitles/SearchScreen'
 
 // or, specify which plugins you need:
 
 const App = (): JSX.Element => {
-  const [count, setCount] = useState(0)
-
   return (
     <>
-      <SearchMovie />
+      <SearchScreen />
     </>
   )
 }
