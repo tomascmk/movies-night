@@ -7,7 +7,7 @@ interface Props {
 export const ImageCarousel = ({ src }: Props) => {
   return (
     <div className={styles.carouselImage}>
-      <Image className={styles.carouselBaseImage} src={src} />
+      <Image src={src} />
     </div>
   )
 }

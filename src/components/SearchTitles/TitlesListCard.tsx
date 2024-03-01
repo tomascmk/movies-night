@@ -5,11 +5,19 @@ import Row from 'react-bootstrap/Row'
 import Card from 'react-bootstrap/Card'
 import { RateBadge } from './RateBadge'
 import { type Title } from '../../types/TitlesTypes'
+import { Button } from 'react-bootstrap'
+import { useCallback } from 'react'
 
 interface Props {
   title?: Title
+  onTitleSelected(title?: Title): void
 }
-export const TitlesListCard = ({ title }: Props): JSX.Element => {
+export const TitlesListCard = ({
+  title,
+  onTitleSelected
+}: Props): JSX.Element => {
+  const handleTitleSelected = useCallback(() => onTitleSelected(title), [title])
+
   return (
     <Card>
       <Card.Body>
@@ -30,10 +38,14 @@ export const TitlesListCard = ({ title }: Props): JSX.Element => {
                 />
               )}
             </Col>
-            <Col xs={2} md={1}>
+            <Col
+              xs={2}
+              md={1}
+              className='d-flex justify-content-center align-items-center'
+            >
               <RateBadge rate={title?.rate} votes={title?.totalVotes} />
             </Col>
-            <Col xs={8} md={10}>
+            <Col xs={6} md={8}>
               <Card.Title>{title?.title}</Card.Title>
               {title?.desc ? (
                 <Card.Subtitle className='mb-2 text-muted'>
@@ -42,8 +54,14 @@ export const TitlesListCard = ({ title }: Props): JSX.Element => {
               ) : (
                 ''
               )}
-              {title?.url && (
-                <Card.Link href={title.url}>Ver Pelicula</Card.Link>
+            </Col>
+            <Col
+              xs={2}
+              md={2}
+              className='d-flex justify-content-center align-items-center'
+            >
+              {title && (
+                <Button onClick={handleTitleSelected}>Ver Pelicula</Button>
               )}
             </Col>
           </Row>

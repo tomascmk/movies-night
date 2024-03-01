@@ -4,8 +4,13 @@ import { Title } from '../../types/TitlesTypes'
 
 interface Props {
   titles: Title[]
+  onTitleSelected(title?: Title): void
 }
-export const SearchTitlesList = ({ titles }: Props): JSX.Element => {
+
+export const SearchTitlesList = ({
+  titles,
+  onTitleSelected
+}: Props): JSX.Element => {
   return (
     <ListGroup>
       {titles.length > 0 &&
@@ -16,7 +21,7 @@ export const SearchTitlesList = ({ titles }: Props): JSX.Element => {
               borderColor: 'transparent'
             }}
           >
-            <TitlesListCard title={title} />
+            <TitlesListCard title={title} onTitleSelected={onTitleSelected} />
           </ListGroup.Item>
         ))}
     </ListGroup>
