@@ -7,6 +7,7 @@ import { RateBadge } from './RateBadge'
 import { type Title } from '../../types/TitlesTypes'
 import { Button } from 'react-bootstrap'
 import { useCallback } from 'react'
+import { TitleImage } from '../TitleImage/TitleImage'
 
 interface Props {
   title?: Title
@@ -24,19 +25,7 @@ export const TitlesListCard = ({
         <Container>
           <Row>
             <Col xs={2} md={1}>
-              {title?.image ? (
-                <Image
-                  src={`https://media.themoviedb.org/t/p${title.image}`}
-                  style={{ maxHeight: 100 }}
-                  rounded
-                />
-              ) : (
-                <Image
-                  src='https://static.vecteezy.com/system/resources/previews/005/337/799/original/icon-image-not-found-free-vector.jpg'
-                  style={{ maxHeight: 100 }}
-                  rounded
-                />
-              )}
+              <TitleImage src={title?.image} />
             </Col>
             <Col
               xs={2}

@@ -2,6 +2,8 @@ import { Modal, Container, Row, Col, Button } from 'react-bootstrap'
 import { type Title } from '../../types/TitlesTypes'
 import styles from './TitlesModal.module.scss'
 import { useMemo } from 'react'
+import { RateBadge } from '../SearchTitles/RateBadge'
+import { TitleImage } from '../TitleImage/TitleImage'
 
 interface Props {
   titleToShow?: Title
@@ -18,30 +20,27 @@ export const TitlesModal = ({ titleToShow, onHide }: Props) => {
       aria-labelledby='contained-modal-title-vcenter'
     >
       <Modal.Header closeButton>
-        <Modal.Title id='contained-modal-title-vcenter'>
+        <Modal.Title id='contained-modal-title-vcenter d-flex'>
           {titleToShow?.title}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body className='grid-example'>
         <Container>
-          <Row>
-            <Col xs={12} md={8}>
-              {titleToShow?.rate}
+          <Row className='mb-3'>
+            <Col xs={12} md={4}>
+              <TitleImage src={titleToShow?.image} />
             </Col>
-            <Col xs={6} md={4}>
-              .col-xs-6 .col-md-4
+            <Col xs={12} md={8}>
+              <RateBadge
+                rate={titleToShow?.rate}
+                votes={titleToShow?.totalVotes}
+              />
             </Col>
           </Row>
 
           <Row>
-            <Col xs={6} md={4}>
-              .col-xs-6 .col-md-4
-            </Col>
-            <Col xs={6} md={4}>
-              .col-xs-6 .col-md-4
-            </Col>
-            <Col xs={6} md={4}>
-              .col-xs-6 .col-md-4
+            <Col xs={12} md={12}>
+              {titleToShow?.desc}
             </Col>
           </Row>
         </Container>
