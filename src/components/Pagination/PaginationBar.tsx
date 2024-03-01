@@ -13,7 +13,7 @@ export const PaginationBar = ({ pageCount, onPageChange }: Props) => {
     () => (pageCount === 0 ? true : false),
     [pageCount]
   )
-  console.log(pageCount)
+
   const handlePageChange = (number: number) => {
     setActivePage(number)
     onPageChange(number)
