@@ -1,6 +1,6 @@
 @mixin carouselImageContainer{
-    height: 100%;
-    width: 100%;
+    height: 30vh;
+    width: auto;
     background-position: center;
     background-size: cover;
     flex-direction: column;
@@ -9,15 +9,21 @@
     overflow: hidden;
 }
 .carouselContainer{
-    position: sticky;
-
     top: 0;
 }
 .carouselImage{
-   @include carouselImageContainer()
+   @include carouselImageContainer();
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
 }
 
 .carouselBaseImage{
     width: 100%;
-    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
