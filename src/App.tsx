@@ -1,11 +1,12 @@
+import { Layout } from './components/Layout/Layout'
 import { SearchScreen } from './components/SearchTitles/SearchScreen'
-
-// or, specify which plugins you need:
 
 const App = (): JSX.Element => {
   return (
     <>
-      <SearchScreen />
+      <Layout>
+        <SearchScreen />
+      </Layout>
     </>
   )
 }

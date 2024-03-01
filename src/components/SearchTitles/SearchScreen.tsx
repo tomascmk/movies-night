@@ -81,11 +81,14 @@ export const SearchScreen = () => {
     setCanSearchMovies(option)
   }, [])
 
+  const isLoading = useMemo(
+    (): boolean =>
+      searching || searchDiscoverLoader.loading || searchByNameLoader.loading,
+    [searchDiscoverLoader.loading, searchByNameLoader.loading, searching]
+  )
   return (
     <>
-      {(searching ||
-        searchDiscoverLoader.loading ||
-        searchByNameLoader.loading) && <ScreenLoader />}
+      {isLoading && <ScreenLoader />}
       <SearchSlider />
       <SearchOptions
         onOptionChange={handleOptionChange}
