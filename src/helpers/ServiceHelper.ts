@@ -1,5 +1,6 @@
+import { UserService } from '../services/UserService'
 import { UtilsService } from '../services/UtilsService'
-import { Title } from '../types/TitlesTypes'
+import { Title, TitleType } from '../types/TitlesTypes'
 
 export abstract class ServiceHelper {
   static getMoviesList = async (movies: any[]): Promise<Title[]> => {
@@ -15,7 +16,8 @@ export abstract class ServiceHelper {
         url: movie.url,
         rate: movie.vote_average,
         totalVotes: movie.vote_count,
-        adults: movie.adult
+        adults: movie.adult,
+        type: TitleType.Movie
       }
     })
   }
@@ -32,8 +34,15 @@ export abstract class ServiceHelper {
         url: serie.url,
         rate: serie.vote_average,
         totalVotes: serie.vote_count,
-        adults: serie.adult
+        adults: serie.adult,
+        type: TitleType.Serie
       }
     })
+  }
+
+  static getUserCountryCode = async (): Promise<string> => {
+    const ip = await UserService.getUserIp()
+    const countryCode = await UserService.getCountryCodeByIp(ip)
+    return countryCode
   }
 }
