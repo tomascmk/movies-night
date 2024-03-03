@@ -36,6 +36,7 @@ module.exports = {
         "@typescript-eslint/strict-boolean-expressions": "off",
         "@typescript-eslint/indent": "off",
         "@typescript-eslint/no-extraneous-class": "off",
-        "@typescript-eslint/space-before-function-paren": "off"
+        "@typescript-eslint/space-before-function-paren": "off",
+
     }
 }
