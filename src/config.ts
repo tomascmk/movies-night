@@ -1,11 +1,14 @@
-import type { Dictionary } from './core/Collections'
-import { EnvConfigHelper } from './helpers/EnvConfigHelper'
+/* import type { Dictionary } from './core/Collections'
+import { EnvConfigHelper } from './helpers/EnvConfigHelper' */
 
 export class BaseConfigProcessor {
   processConfig(): AppSettingsBase {
     return {
       TmdbKeyId: import.meta.env.TMDB_API_KEY,
-      BaseUrlTmdb: import.meta.env.TMDB_BASE_URL_TMDB
+      BaseUrlTmdb: import.meta.env.TMDB_BASE_URL,
+      BaseUrlSA: import.meta.env.SA_BASE_URL,
+      BaseUrlIpify: import.meta.env.IPIFY_BASE_URL,
+      BaseUrlIpLocation: import.meta.env.IPLOCATION_BASE_URL
     }
   }
 }
@@ -13,6 +16,9 @@ export class BaseConfigProcessor {
 export interface AppSettingsBase {
   TmdbKeyId: string
   BaseUrlTmdb: string
+  BaseUrlSA: string
+  BaseUrlIpify: string
+  BaseUrlIpLocation: string
 }
 
 const configProcessor = new BaseConfigProcessor()
