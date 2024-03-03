@@ -4,11 +4,10 @@ import {
   Row,
   Col,
   Button,
-  ListGroup,
-  Card,
-  Placeholder
+  Placeholder,
+  Alert
 } from 'react-bootstrap'
-import { type Title } from '../../types/TitlesTypes'
+import { StreamProvider, type Title } from '../../types/TitlesTypes'
 import styles from './TitlesModal.module.scss'
 import { useCallback, useMemo, useState } from 'react'
 import { RateBadge } from '../SearchTitles/RateBadge'
@@ -16,6 +15,8 @@ import { TitleImage } from '../TitleImage/TitleImage'
 import { ModalSwitch } from './ModalSwitch'
 import { useAsyncCall } from '../../hooks/useAsyncCall'
 import { StreamingService } from '../../services/StreamingService'
+import { useProvidersTranslation } from '../../hooks/useProvidersTranslation'
+import { StreamingHelper } from '../../helpers/StreamingHelper'
 
 interface Props {
   titleToShow?: Title
@@ -23,17 +24,12 @@ interface Props {
 }
 export const TitlesModal = ({ titleToShow, onHide }: Props) => {
   const [canShowDescription, setCanShowDescription] = useState(true)
-  const [streamProvider, setStreamProvider] = useState<string[]>([])
+  const [streamProvider, setStreamProvider] = useState<StreamProvider[]>([])
   const canShowModal = useMemo(() => titleToShow !== undefined, [])
-
+  const { t } = useProvidersTranslation()
   const handleOptionChange = useCallback((option: boolean) => {
     setCanShowDescription(option)
   }, [])
-
-  /* const streamingLoader = useAsyncCall(async () => {
-    setStreamProvider(['disney', 'netflix'])
-    return ['disney', 'netflix'] // TODO: add more providers when available
-  }, []) */
 
   const streamingLoader = useAsyncCall(async () => {
     const providerAvailable = await StreamingService.getStreamingByTitle(
@@ -53,10 +49,15 @@ export const TitlesModal = ({ titleToShow, onHide }: Props) => {
         {streamProvider.map((service) => (
           <Row key={service} className='mb-2'>
             <Col className='d-flex justify-content-start align-items-center'>
-              {service}
+              {t(service)}
             </Col>
             <Col className='d-flex justify-content-end align-items-center'>
-              <Button>Visite site</Button>
+              <Alert.Link
+                href={StreamingHelper.getProvidersUrl(service)}
+                target='_blank'
+              >
+                Visite site
+              </Alert.Link>
             </Col>
           </Row>
         ))}

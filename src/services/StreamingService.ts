@@ -1,11 +1,14 @@
 /* import { AppType, apiGet } from './BaseService' */
 import { ArrayHelper } from '../helpers/ArrayHelper'
 import { ServiceHelper } from '../helpers/ServiceHelper'
-import { Title } from '../types/TitlesTypes'
+import { StreamingHelper } from '../helpers/StreamingHelper'
+import { StreamProvider, Title } from '../types/TitlesTypes'
 import { AppType, apiGet } from './BaseService'
 
 export abstract class StreamingService {
-  static getStreamingByTitle = async (title?: Title): Promise<string[]> => {
+  static getStreamingByTitle = async (
+    title?: Title
+  ): Promise<StreamProvider[]> => {
     try {
       if (!title) {
         console.log('Error on getStreamingByTitle', 'No title provided')
@@ -27,7 +30,8 @@ export abstract class StreamingService {
         )
         .streamingInfo[countryCode].map((provider: any) => provider.service)
 
-      return ArrayHelper.deleteDuplicates(streamingInfo)
+      const providers = ArrayHelper.deleteDuplicates(streamingInfo)
+      return StreamingHelper.getParsedProvided(providers)
     } catch (error: any) {
       console.log('Error on getStreamingByTitle', error)
       throw error

@@ -45,7 +45,7 @@ export const TitlesListCard = ({
               className='d-flex justify-content-center align-items-center'
             >
               {title && (
-                <Button onClick={handleTitleSelected}>Ver Pelicula</Button>
+                <Button onClick={handleTitleSelected}>Watch Movie</Button>
               )}
             </Col>
           </Row>
