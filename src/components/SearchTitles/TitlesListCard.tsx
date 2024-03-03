@@ -1,6 +1,5 @@
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-import Image from 'react-bootstrap/Image'
 import Row from 'react-bootstrap/Row'
 import Card from 'react-bootstrap/Card'
 import { RateBadge } from './RateBadge'
@@ -27,11 +26,7 @@ export const TitlesListCard = ({
             <Col xs={2} md={1}>
               <TitleImage src={title?.image} />
             </Col>
-            <Col
-              xs={2}
-              md={1}
-              className='d-flex justify-content-center align-items-center'
-            >
+            <Col xs={2} md={1}>
               <RateBadge rate={title?.rate} votes={title?.totalVotes} />
             </Col>
             <Col xs={6} md={8}>

@@ -7,7 +7,7 @@ export const TitleImage = ({ src }: Props) => {
     <>
       {src ? (
         <Image
-          src={`https://media.themoviedb.org/t/p${src}`}
+          src={`http://image.tmdb.org/t/p/w500/${src}`}
           style={{ maxHeight: 100 }}
           rounded
         />
