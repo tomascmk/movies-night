@@ -1,9 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
-
-// Import all of Bootstrap's JS
-import * as bootstrap from 'bootstrap'
 import './styles/index.scss'
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
