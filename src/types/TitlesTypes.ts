@@ -1,3 +1,7 @@
+export enum TitleType {
+  Movie = 'movie',
+  Serie = 'serie'
+}
 export interface Title {
   id: number
   title: string
@@ -7,4 +11,5 @@ export interface Title {
   rate?: number
   totalVotes?: number
   adults?: boolean
+  type: TitleType
 }
