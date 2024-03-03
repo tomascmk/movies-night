@@ -9,3 +9,7 @@ export interface SearchTitlesParams {
   page?: number | string
   query?: string
 }
+
+export interface GeoParams {
+  ip?: string
+}
