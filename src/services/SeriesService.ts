@@ -14,7 +14,7 @@ export const getSeries = async (
       totalPages: response.total_pages
     }
   } catch (error: any) {
-    console.log('Error on getAccountHotelTaxesFees', error)
+    console.log('Error on getSeries', error)
     throw error
   }
 }
@@ -31,7 +31,7 @@ export const getSeriesByName = async (
       totalPages: response.total_pages
     }
   } catch (error: any) {
-    console.log('Error on getAccountHotelTaxesFees', error)
+    console.log('Error on getSeriesByName', error)
     throw error
   }
 }

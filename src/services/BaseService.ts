@@ -10,11 +10,17 @@ import type {
 import { SearchTitlesParams } from '../types/ApiTypes'
 
 export enum ApplicationId {
-  Tmdb = 'Tmdb'
+  Tmdb = 'Tmdb',
+  SA = 'SA',
+  Ipify = 'Ipify',
+  IpLocation = 'IpLocation'
 }
 
 export enum AppType {
-  Tmdb = 'Tmdb'
+  Tmdb = 'Tmdb',
+  SA = 'SA',
+  Ipify = 'Ipify',
+  IpLocation = 'IpLocation'
 }
 
 export enum HttpMethod {
@@ -79,8 +85,8 @@ const getResponse = async <ResT, ReqT>(
   data?: ReqT,
   appType?: AppType,
   config: RequestConfig = {},
-  paginated?: boolean,
-  params?: SearchTitlesParams
+  _paginated?: boolean,
+  params?: any
 ): Promise<ResT> => {
   let fullUrl: string
   const axiosRequestConfig: AxiosRequestConfig | undefined = config
@@ -94,9 +100,39 @@ const getResponse = async <ResT, ReqT>(
       if (!axiosRequestConfig.headers) {
         axiosRequestConfig.headers = {}
       }
-      /* axiosRequestConfig.headers['Access-Control-Allow-Credentials'] = true */
-      /* axiosRequestConfig.headers['X-API-Key'] =
-        ConfigurationService.AppSettings.TmdbKeyId */
+      break
+    case AppType.SA:
+      fullUrl = `${
+        ConfigurationService.AppSettings.BaseUrlSA
+      }${relativeUrl}${getParams(params)}`
+      if (!axiosRequestConfig.headers) {
+        axiosRequestConfig.headers = {}
+      }
+      ;(axiosRequestConfig.headers['X-RapidAPI-Key'] =
+        'b7272af9famsh466d37df6493dedp13eaabjsnfeddc25dada0'),
+        (axiosRequestConfig.headers['X-RapidAPI-Host'] =
+          'streaming-availability.p.rapidapi.com')
+      break
+    case AppType.Ipify:
+      fullUrl = `${ConfigurationService.AppSettings.BaseUrlIpify}`
+      if (!axiosRequestConfig.headers) {
+        axiosRequestConfig.headers = {}
+      }
+      break
+    case AppType.IpLocation:
+      fullUrl = `${
+        ConfigurationService.AppSettings.BaseUrlIpLocation
+      }${getParams(params)}`
+      if (!axiosRequestConfig.headers) {
+        axiosRequestConfig.headers = {}
+      }
+      ;(axiosRequestConfig.headers['content-type'] =
+        'application/x-www-form-urlencoded'),
+        (axiosRequestConfig.headers['X-RapidAPI-Key'] =
+          'b7272af9famsh466d37df6493dedp13eaabjsnfeddc25dada0'),
+        (axiosRequestConfig.headers['X-RapidAPI-Host'] =
+          'ip-location5.p.rapidapi.com')
+
       break
     default:
       fullUrl = `${ConfigurationService.AppSettings.BaseUrlTmdb}${relativeUrl}`
@@ -126,7 +162,7 @@ const getResponse = async <ResT, ReqT>(
           ReqT,
           AxiosResponse<DataResponse>
         >(fullUrl, data, axiosRequestConfig)
-        return response?.data?.results ?? []
+        return response?.data ?? []
       } catch (error: any) {
         handleError(
           error as AxiosError<ApiErrorResponse>,
@@ -183,20 +219,14 @@ const getResponse = async <ResT, ReqT>(
       }
     }
 
-    // TODO: Validate return types for delete
-    // case HttpMethod.Delete: {
-    //   const response = await axios.delete<APIDataResponse<ResT>>(fullUrl, headers);
-    //   return response.data.data;
-    // }
-
     default:
       throw 'Invalid HTTP Method ' + httpMethod
   }
 }
 
-export const handleError = <ReqT,>(
+export const handleError = <ReqT>(
   error: AxiosError<ApiErrorResponse>,
-  method: string,
+  _method: string,
   fullUrl = '',
   data?: ReqT
 ): void => {
@@ -224,8 +254,8 @@ export const handleError = <ReqT,>(
 // TODO: Enable call aborting
 export const apiPost = async <ReqT, ResT>(
   url: string,
-  data?: ReqT,
   appType: AppType = AppType.Tmdb,
+  data?: ReqT,
   requestConfig?: RequestConfig,
   paginated?: boolean
 ): Promise<ResT> =>
@@ -251,10 +281,10 @@ export const apiPatch = async <ReqT, ResT>(
   requestConfig?: RequestConfig
 ): Promise<ResT> =>
   await getResponse(HttpMethod.Patch, url, data, appType, requestConfig)
-export const apiGet = async <ResT,>(
+export const apiGet = async <ResT>(
   url: string,
   appType: AppType = AppType.Tmdb,
-  params?: SearchTitlesParams,
+  params?: any,
   requestConfig?: RequestConfig,
   paginated?: boolean
 ): Promise<ResT> =>
@@ -267,7 +297,7 @@ export const apiGet = async <ResT,>(
     paginated,
     params
   )
-export const apiDelete = async <ResT,>(
+export const apiDelete = async <ResT>(
   url: string,
   appType: AppType = AppType.Tmdb,
   requestConfig?: RequestConfig

@@ -14,7 +14,7 @@ export const getMovies = async (
       totalPages: response.total_pages
     }
   } catch (error: any) {
-    console.log('Error on getAccountHotelTaxesFees', error)
+    console.log('Error on getMovies', error)
     throw error
   }
 }
@@ -31,7 +31,7 @@ export const getMoviesByName = async (
       totalPages: response.total_pages
     }
   } catch (error: any) {
-    console.log('Error on getAccountHotelTaxesFees', error)
+    console.log('Error on getMoviesByName', error)
     throw error
   }
 }

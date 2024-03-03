@@ -11,7 +11,7 @@ export abstract class UtilsService {
       })
       return images
     } catch (error: any) {
-      console.log('Error on getAccountHotelTaxesFees', error)
+      console.log('Error on getTitlesImages', error)
       throw error
     }
   }
