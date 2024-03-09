@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { InputGroup, Form, Button } from 'react-bootstrap'
 
 interface Props {
@@ -13,6 +13,16 @@ export const SearchBar = ({ onSearch }: Props): JSX.Element => {
   const onInputChange = () => {
     onSearch(title)
   }
+
+  const handleKeyPress = useCallback(
+    (event: { key: string }) => {
+      if (event.key === 'Enter') {
+        onSearch(title)
+      }
+    },
+    [title]
+  )
+
   return (
     <InputGroup className='mb-3'>
       <Form.Control
@@ -20,6 +30,7 @@ export const SearchBar = ({ onSearch }: Props): JSX.Element => {
         aria-label='Search Title Here'
         aria-describedby='basic-addon1'
         onChange={handleInputChange}
+        onKeyDown={handleKeyPress}
       />
       <Button
         variant='outline-secondary'
