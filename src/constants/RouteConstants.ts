@@ -1,3 +1,4 @@
 export const routes = {
-  Home: '/'
+  Home: '/',
+  MovieProfile: '/movie-profile'
 }

@@ -1,18 +1,9 @@
 import { useCallback, useState } from 'react'
-import {
-  Accordion,
-  Row,
-  Col,
-  Image,
-  Alert,
-  Container,
-  Carousel,
-  CarouselItem
-} from 'react-bootstrap'
+import { Accordion, Row, Col, Image, Alert, ListGroup } from 'react-bootstrap'
 import { useAsyncCall } from '../../hooks/useAsyncCall'
 import { getRecomedationsById } from '../../services/MoviesService'
 import { Title } from '../../types/TitlesTypes'
-import { TitleImage } from '../TitleImage/TitleImage'
+import { routes } from '../../constants/RouteConstants'
 
 interface Props {
   title: Title
@@ -29,21 +20,19 @@ export const TitlesRecomended = ({ title }: Props) => {
   }, [title])
 
   const renderRecomendations = useCallback((): JSX.Element => {
+    const recomendationsToShow = recomendations.slice(0, 5)
     return (
-      <Carousel>
-        {recomendations.map((titleRecomended) => (
-          <CarouselItem>
-            <Row>
-              <Col xs={4} className='justify-content-center'>
-                <Alert.Link>
-                  <TitleImage src={titleRecomended.image} />
-                </Alert.Link>
-                <span>{titleRecomended.title}</span>
-              </Col>
-            </Row>
-          </CarouselItem>
+      <ListGroup variant='flush'>
+        {recomendationsToShow.map((titleRecomended) => (
+          <ListGroup.Item>
+            <Alert.Link
+              href={`${routes.MovieProfile}?id=${titleRecomended.id}`}
+            >
+              {titleRecomended.title}
+            </Alert.Link>
+          </ListGroup.Item>
         ))}
-      </Carousel>
+      </ListGroup>
     )
   }, [recomendations])
 
