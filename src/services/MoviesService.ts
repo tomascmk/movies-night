@@ -1,5 +1,9 @@
 import { ServiceHelper } from '../helpers/ServiceHelper'
-import { TitlesResponse, SearchTitlesParams } from '../types/ApiTypes'
+import {
+  TitlesResponse,
+  SearchTitlesParams,
+  ExternalKeys
+} from '../types/ApiTypes'
 import { Title } from '../types/TitlesTypes'
 import { AppType, apiGet } from './BaseService'
 
@@ -45,6 +49,33 @@ export const getRecomedationsById = async (
     const url = `/movie/${id}/recommendations?`
     const response = await apiGet<any>(url, AppType.Tmdb, params)
     return await ServiceHelper.getMoviesList(response.results)
+  } catch (error: any) {
+    console.log('Error on getMoviesByName', error)
+    throw error
+  }
+}
+
+export const getExternalIds = async (id: number): Promise<ExternalKeys> => {
+  try {
+    const url = `/movie/${id}/external_ids?`
+    const response = await apiGet<any>(url, AppType.Tmdb)
+    console.log('response', response)
+    return response as ExternalKeys
+  } catch (error: any) {
+    console.log('Error on getMoviesByName', error)
+    throw error
+  }
+}
+
+export const getMovieById = async (
+  id: number,
+  params?: SearchTitlesParams
+): Promise<Title[]> => {
+  try {
+    const ids = await getExternalIds(id)
+    const url = `/find/${ids.imdb_id}?`
+    const response = await apiGet<any>(url, AppType.Tmdb, params)
+    return await ServiceHelper.getMoviesList(response.movie_results)
   } catch (error: any) {
     console.log('Error on getMoviesByName', error)
     throw error
