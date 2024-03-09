@@ -17,20 +17,28 @@ export abstract class StreamingService {
       const countryCode = (
         await ServiceHelper.getUserCountryCode()
       ).toLocaleLowerCase()
+
       const url = `/search/title?`
       const response = await apiGet<any>(url, AppType.SA, {
         title: title.title,
         country: countryCode,
         showType: title.type
       })
-      const streamingInfo = response.result
-        .find(
-          (titleFetched: { title: string }) =>
-            titleFetched.title === title.title
-        )
-        .streamingInfo[countryCode].map((provider: any) => provider.service)
 
-      const providers = ArrayHelper.deleteDuplicates(streamingInfo)
+      const streamingInfo = response.result.find(
+        (titleFetched: { title: string }) => titleFetched.title === title.title
+      ).streamingInfo[countryCode]
+
+      if (!streamingInfo) {
+        return []
+      }
+
+      const providerServices = streamingInfo.map(
+        (provider: any) => provider.service
+      )
+
+      const providers = ArrayHelper.deleteDuplicates(providerServices)
+
       return StreamingHelper.getParsedProvided(providers)
     } catch (error: any) {
       console.log('Error on getStreamingByTitle', error)

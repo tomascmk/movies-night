@@ -5,7 +5,12 @@ import {
   Col,
   Button,
   Placeholder,
-  Alert
+  Alert,
+  OverlayTrigger,
+  Tooltip,
+  Badge,
+  Image,
+  Accordion
 } from 'react-bootstrap'
 import { StreamProvider, type Title } from '../../types/TitlesTypes'
 import styles from './TitlesModal.module.scss'
@@ -17,6 +22,7 @@ import { useAsyncCall } from '../../hooks/useAsyncCall'
 import { StreamingService } from '../../services/StreamingService'
 import { useProvidersTranslation } from '../../hooks/useProvidersTranslation'
 import { StreamingHelper } from '../../helpers/StreamingHelper'
+import { TitlesRecomended } from './TitlesRecomended'
 
 interface Props {
   titleToShow?: Title
@@ -25,8 +31,10 @@ interface Props {
 export const TitlesModal = ({ titleToShow, onHide }: Props) => {
   const [canShowDescription, setCanShowDescription] = useState(true)
   const [streamProvider, setStreamProvider] = useState<StreamProvider[]>([])
-  const canShowModal = useMemo(() => titleToShow !== undefined, [])
   const { t } = useProvidersTranslation()
+
+  const canShowModal = useMemo(() => titleToShow !== undefined, [])
+
   const handleOptionChange = useCallback((option: boolean) => {
     setCanShowDescription(option)
   }, [])
@@ -39,11 +47,36 @@ export const TitlesModal = ({ titleToShow, onHide }: Props) => {
     return providerAvailable
   }, [])
 
+  const renderTooltip = (props: any) => (
+    <Tooltip id='button-tooltip' {...props}>
+      If the {titleToShow?.type} releases now, that could be the reason why it
+      is not available on any of the providers yet. Otherwise, it may not be
+      available in your region.
+    </Tooltip>
+  )
+
   const getStreamProvider = useCallback((): JSX.Element => {
     if (!streamProvider.length) {
-      return <span>No stream provider available</span>
+      return (
+        <Alert
+          key={'danger'}
+          variant={'danger'}
+          className='d-flex justify-content-between'
+        >
+          No stream provider available.
+          <OverlayTrigger
+            placement='right'
+            delay={{ show: 250, hide: 400 }}
+            overlay={renderTooltip}
+          >
+            <Alert.Link>
+              <Badge bg='secondary'>?</Badge>
+            </Alert.Link>
+          </OverlayTrigger>
+        </Alert>
+      )
     }
-    console.log('streamProvider', streamProvider)
+
     return (
       <Col>
         {streamProvider.map((service) => (
@@ -122,6 +155,11 @@ export const TitlesModal = ({ titleToShow, onHide }: Props) => {
               )}
             </Col>
           </Row>
+          {titleToShow && (
+            <Row className='mt-4'>
+              <TitlesRecomended title={titleToShow} />
+            </Row>
+          )}
         </Container>
       </Modal.Body>
       <Modal.Footer>
