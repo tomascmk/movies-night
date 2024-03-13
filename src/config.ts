@@ -8,7 +8,8 @@ export class BaseConfigProcessor {
       BaseUrlTmdb: import.meta.env.TMDB_BASE_URL,
       BaseUrlSA: import.meta.env.SA_BASE_URL,
       BaseUrlIpify: import.meta.env.IPIFY_BASE_URL,
-      BaseUrlIpLocation: import.meta.env.IPLOCATION_BASE_URL
+      BaseUrlIpLocation: import.meta.env.IPLOCATION_BASE_URL,
+      BaseUrlApi: import.meta.env.API_BACK
     }
   }
 }
@@ -19,6 +20,7 @@ export interface AppSettingsBase {
   BaseUrlSA: string
   BaseUrlIpify: string
   BaseUrlIpLocation: string
+  BaseUrlApi: string
 }
 
 const configProcessor = new BaseConfigProcessor()

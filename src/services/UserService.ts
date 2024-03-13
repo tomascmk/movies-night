@@ -24,4 +24,15 @@ export abstract class UserService {
       throw error
     }
   }
+
+  static getWishlist = async (): Promise<string> => {
+    try {
+      const response = await apiGet('/wishlist', AppType.Api)
+      console.log('response', response)
+      return 'countryCode'
+    } catch (error: any) {
+      console.log('Error on getCountryCodeByIp', error)
+      throw error
+    }
+  }
 }

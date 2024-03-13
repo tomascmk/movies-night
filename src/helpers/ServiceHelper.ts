@@ -1,6 +1,6 @@
 import { UserService } from '../services/UserService'
 import { UtilsService } from '../services/UtilsService'
-import { StreamProvider, Title, TitleType } from '../types/TitlesTypes'
+import { Title, TitleType } from '../types/TitlesTypes'
 
 export abstract class ServiceHelper {
   static getMoviesList = async (movies: any[]): Promise<Title[]> => {

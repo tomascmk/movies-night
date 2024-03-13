@@ -1,7 +1,19 @@
 import { Navbar, Container, NavDropdown, Nav } from 'react-bootstrap'
+import { useCallback, useState } from 'react'
+import { Wishlist } from '../Wishlist/Wishlist'
 
 export const NavbarMenu = () => {
-  const canShowUserOptions = false
+  const canShowUserOptions = true
+
+  const [canShowWishlist, setShowWishlist] = useState(false)
+
+  const handleOpenWishlist = useCallback(() => {
+    setShowWishlist(true)
+  }, [canShowWishlist])
+
+  const handleCloseWishlist = useCallback(() => {
+    setShowWishlist(false)
+  }, [canShowWishlist])
 
   return (
     <Navbar className='bg-body-tertiary'>
@@ -9,7 +21,7 @@ export const NavbarMenu = () => {
         <Navbar.Brand href='/'>
           <img
             alt=''
-            src='../../../public/img/pop-corn.svg'
+            src='../../../public/img/mundo.svg'
             width='30'
             height='30'
             className='d-inline-block align-top'
@@ -19,7 +31,9 @@ export const NavbarMenu = () => {
         {canShowUserOptions ? (
           <NavDropdown title='User' id='navbarScrollingDropdown'>
             <NavDropdown.Item href='#action3'>Profile</NavDropdown.Item>
-            <NavDropdown.Item href='#action4'>Wishlist</NavDropdown.Item>
+            <NavDropdown.Item onClick={handleOpenWishlist}>
+              Wishlist
+            </NavDropdown.Item>
             <NavDropdown.Item href='#action4'>Favourite</NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item href='#action5'>Sign out</NavDropdown.Item>
@@ -31,6 +45,10 @@ export const NavbarMenu = () => {
           </Nav>
         )}
       </Container>
+      <Wishlist
+        canShowWishlist={canShowWishlist}
+        onClose={handleCloseWishlist}
+      />
     </Navbar>
   )
 }

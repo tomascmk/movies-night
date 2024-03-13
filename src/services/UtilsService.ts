@@ -5,7 +5,7 @@ export abstract class UtilsService {
     try {
       const images: string[] = []
       ids.forEach(async (id) => {
-        const url = `/movie/${id}/images?`
+        const url = `/movie/${id}/images`
         const response = await apiGet<any>(url, AppType.Tmdb)
         images.push(response.posters[0].file_path)
       })

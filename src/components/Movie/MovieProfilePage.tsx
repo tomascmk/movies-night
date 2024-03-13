@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { MovieProfile } from './MovieProfile'
 import { useAsyncCall } from '../../hooks/useAsyncCall'
 import { getMovieById } from '../../services/MoviesService'

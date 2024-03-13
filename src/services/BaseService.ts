@@ -13,14 +13,16 @@ export enum ApplicationId {
   Tmdb = 'Tmdb',
   SA = 'SA',
   Ipify = 'Ipify',
-  IpLocation = 'IpLocation'
+  IpLocation = 'IpLocation',
+  Api = 'API'
 }
 
 export enum AppType {
   Tmdb = 'Tmdb',
   SA = 'SA',
   Ipify = 'Ipify',
-  IpLocation = 'IpLocation'
+  IpLocation = 'IpLocation',
+  Api = 'API'
 }
 
 export enum HttpMethod {
@@ -76,7 +78,7 @@ const getParams = (params: SearchTitlesParams | undefined): string => {
             : values[i]
         }&`)
   )
-  return paramsString.slice(0, -1)
+  return `?${paramsString.slice(0, -1)}`
 }
 
 const getResponse = async <ResT, ReqT>(
@@ -94,9 +96,10 @@ const getResponse = async <ResT, ReqT>(
     case AppType.Tmdb:
       fullUrl = `${
         ConfigurationService.AppSettings.BaseUrlTmdb
-      }${relativeUrl}api_key=${import.meta.env.TMDB_API_KEY}${getParams(
-        params
-      )}`
+      }${relativeUrl}${getParams({
+        api_key: import.meta.env.TMDB_API_KEY,
+        ...params
+      })}`
       if (!axiosRequestConfig.headers) {
         axiosRequestConfig.headers = {}
       }
@@ -132,6 +135,13 @@ const getResponse = async <ResT, ReqT>(
           'b7272af9famsh466d37df6493dedp13eaabjsnfeddc25dada0'),
         (axiosRequestConfig.headers['X-RapidAPI-Host'] =
           'ip-location5.p.rapidapi.com')
+
+      break
+
+    case AppType.Api:
+      fullUrl = `${
+        ConfigurationService.AppSettings.BaseUrlApi
+      }${relativeUrl}${getParams(params)}`
 
       break
     default:

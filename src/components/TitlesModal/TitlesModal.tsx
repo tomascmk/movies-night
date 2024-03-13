@@ -1,28 +1,7 @@
-import {
-  Modal,
-  Container,
-  Row,
-  Col,
-  Button,
-  Placeholder,
-  Alert,
-  OverlayTrigger,
-  Tooltip,
-  Badge,
-  Image,
-  Accordion
-} from 'react-bootstrap'
-import { StreamProvider, type Title } from '../../types/TitlesTypes'
+import { Modal, Button } from 'react-bootstrap'
+import { type Title } from '../../types/TitlesTypes'
 import styles from './TitlesModal.module.scss'
-import { useCallback, useMemo, useState } from 'react'
-import { RateBadge } from '../SearchTitles/RateBadge'
-import { TitleImage } from '../TitleImage/TitleImage'
-import { ModalSwitch } from './ModalSwitch'
-import { useAsyncCall } from '../../hooks/useAsyncCall'
-import { StreamingService } from '../../services/StreamingService'
-import { useProvidersTranslation } from '../../hooks/useProvidersTranslation'
-import { StreamingHelper } from '../../helpers/StreamingHelper'
-import { TitlesRecomended } from './TitlesRecomended'
+import { useMemo } from 'react'
 import { MovieProfile } from '../Movie/MovieProfile'
 
 interface Props {

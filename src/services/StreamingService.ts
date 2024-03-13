@@ -18,7 +18,7 @@ export abstract class StreamingService {
         await ServiceHelper.getUserCountryCode()
       ).toLocaleLowerCase()
 
-      const url = `/search/title?`
+      const url = `/search/title`
       const response = await apiGet<any>(url, AppType.SA, {
         title: title.title,
         country: countryCode,

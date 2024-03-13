@@ -1,5 +1,4 @@
 import { Col, Container, Row, Image, Alert, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 
 export const ErrorDashboard = () => {
   return (
