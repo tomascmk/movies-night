@@ -3,9 +3,10 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Card from 'react-bootstrap/Card'
 import { type Title } from '../../types/TitlesTypes'
-import { Button, ButtonGroup, Dropdown } from 'react-bootstrap'
+import { ButtonGroup, Dropdown } from 'react-bootstrap'
 import { useCallback } from 'react'
 import { TitleImage } from '../TitleImage/TitleImage'
+import { routes } from '../../constants/RouteConstants'
 
 interface Props {
   title?: Title
@@ -37,7 +38,9 @@ export const WishListItem = ({
                 <Dropdown as={ButtonGroup}>
                   <Dropdown.Toggle variant='dark' id='dropdown-split-basic' />
                   <Dropdown.Menu>
-                    <Dropdown.Item href='#/action-1'>
+                    <Dropdown.Item
+                      href={`${routes.MovieProfile}?id=${title.id}`}
+                    >
                       Title description
                     </Dropdown.Item>
                     <Dropdown.Item onClick={handleTitleSelected}>

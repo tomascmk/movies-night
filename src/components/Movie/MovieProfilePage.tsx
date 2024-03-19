@@ -3,6 +3,7 @@ import { MovieProfile } from './MovieProfile'
 import { useAsyncCall } from '../../hooks/useAsyncCall'
 import { getMovieById } from '../../services/MoviesService'
 import { Title } from '../../types/TitlesTypes'
+import { ScreenLoader } from '../Loader/ScreenLoader'
 
 export const MovieProfilePage = () => {
   const [title, setTitle] = useState<Title>()
@@ -20,6 +21,6 @@ export const MovieProfilePage = () => {
   return movieLoader.completed && title ? (
     <MovieProfile titleToShow={title} />
   ) : (
-    <div>Error</div>
+    <ScreenLoader />
   )
 }

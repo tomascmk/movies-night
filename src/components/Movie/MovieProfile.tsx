@@ -91,11 +91,11 @@ export const MovieProfile = ({ titleToShow }: Props) => {
   }, [streamProvider])
   return (
     <Container>
-      <Row className='mb-3'>
-        <Col xs={12} md={4}>
-          <TitleImage src={titleToShow?.image} />
+      <Row className='mb-3 mt-4'>
+        <Col xs={12} md={6} xl={3}>
+          <TitleImage src={titleToShow?.image} height={300} />
         </Col>
-        <Col xs={12} md={8}>
+        <Col xs={12} md={6} xl={9}>
           <RateBadge rate={titleToShow?.rate} votes={titleToShow?.totalVotes} />
         </Col>
       </Row>
