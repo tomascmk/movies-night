@@ -92,10 +92,10 @@ export const MovieProfile = ({ titleToShow }: Props) => {
   return (
     <Container>
       <Row className='mb-3 mt-4'>
-        <Col xs={12} md={6} xl={3}>
+        <Col>
           <TitleImage src={titleToShow?.image} height={300} />
         </Col>
-        <Col xs={12} md={6} xl={9}>
+        <Col>
           <RateBadge rate={titleToShow?.rate} votes={titleToShow?.totalVotes} />
         </Col>
       </Row>
