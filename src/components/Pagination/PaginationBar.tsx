@@ -22,18 +22,16 @@ export const PaginationBar = ({ pageCount, onPageChange }: Props) => {
 
   const pages = useMemo(() => {
     let items = []
-    let start
-    let end
+    let start = activePage - 3
+    let end = activePage + 3
+
     if (activePage === 0 || activePage === pageCount) {
       start = activePage === pageCount ? activePage - 5 : activePage
       end = activePage === pageCount ? activePage : activePage + 5
-    } else {
-      start = activePage - 3
-      end = activePage + 3
     }
 
     for (let number = start; number <= end; number++) {
-      if (number >= 1) {
+      if (number >= 1 && number <= pageCount) {
         items.push(
           <Pagination.Item
             key={number}
@@ -56,7 +54,10 @@ export const PaginationBar = ({ pageCount, onPageChange }: Props) => {
     >
       {activePage > 1 && !isItemDisabled && (
         <>
-          <Pagination.First onClick={() => handlePageChange(1)} />
+          {activePage - 1 !== 1 && (
+            <Pagination.First onClick={() => handlePageChange(1)} />
+          )}
+
           <Pagination.Prev onClick={() => handlePageChange(activePage - 1)} />
         </>
       )}
@@ -64,7 +65,9 @@ export const PaginationBar = ({ pageCount, onPageChange }: Props) => {
       {activePage < pageCount && !isItemDisabled && (
         <>
           <Pagination.Next onClick={() => handlePageChange(activePage + 1)} />
-          <Pagination.Last onClick={() => handlePageChange(pageCount)} />
+          {activePage + 1 !== pageCount && (
+            <Pagination.Last onClick={() => handlePageChange(pageCount)} />
+          )}
         </>
       )}
     </Pagination>
