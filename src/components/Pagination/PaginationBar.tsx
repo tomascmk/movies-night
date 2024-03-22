@@ -8,7 +8,8 @@ interface Props {
 
 export const PaginationBar = ({ pageCount, onPageChange }: Props) => {
   const [activePage, setActivePage] = useState(1)
-
+  console.log('pageCount', pageCount)
+  console.log('activePage', activePage)
   const isItemDisabled = useMemo(
     () => (pageCount === 0 ? true : false),
     [pageCount]
@@ -21,17 +22,29 @@ export const PaginationBar = ({ pageCount, onPageChange }: Props) => {
 
   const pages = useMemo(() => {
     let items = []
-    for (let number = activePage; number <= activePage + 5; number++) {
-      items.push(
-        <Pagination.Item
-          key={number}
-          active={number === activePage}
-          disabled={isItemDisabled}
-          onClick={() => handlePageChange(number)}
-        >
-          {number}
-        </Pagination.Item>
-      )
+    let start
+    let end
+    if (activePage === 0 || activePage === pageCount) {
+      start = activePage === pageCount ? activePage - 5 : activePage
+      end = activePage === pageCount ? activePage : activePage + 5
+    } else {
+      start = activePage - 3
+      end = activePage + 3
+    }
+
+    for (let number = start; number <= end; number++) {
+      if (number >= 1) {
+        items.push(
+          <Pagination.Item
+            key={number}
+            active={number === activePage}
+            disabled={isItemDisabled}
+            onClick={() => handlePageChange(number)}
+          >
+            {number}
+          </Pagination.Item>
+        )
+      }
     }
     return items
   }, [activePage, pageCount])
